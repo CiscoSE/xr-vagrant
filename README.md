@@ -17,25 +17,32 @@ https://xrdocs.io/application-hosting/tutorials/iosxr-vagrant-quickstart
 git clone https://github.com/CiscoSE/xr-vagrant.git
 ```
 
-2) Move to the root folder of the repo and install pip dependencies (use a virtual environment when possible)
-
-```bash
-pip install -r requirements.txt
-```
-
-3) Start the VM
+2) Move to the root folder of the repo and start the VM
 
 ```bash
 vagrant up
 ```
 
-4) If you need to remove the VM 
+3) If you need to remove the VM 
 
 
 ```bash
 vagrant destroy
 ```
 
-There are a couple of python examples under ydk-examples directory
+
+## Known issues
+If you configure netconf in the router, you will need to restart the router using the
+ following commands
+
+```bash
+vagrant halt -f
+vagrant up
+```
+
+## Examples and tutorials
+There are a couple of python examples under ydk-examples directory. In order to run them, be sure the 
+install the yang development kit: https://github.com/CiscoDevNet/ydk-py
 
 More tutorials at https://xrdocs.io/
+

@@ -22,7 +22,7 @@ from ydk.models.cisco_ios_xr.Cisco_IOS_XR_ifmgr_cfg import InterfaceConfiguratio
 if __name__ == "__main__":
     # create NETCONF session
     provider = NetconfServiceProvider(address="localhost",
-                                      port=57780,
+                                      port=57779,
                                       username="vagrant",
                                       password="vagrant",
                                       protocol="ssh")
