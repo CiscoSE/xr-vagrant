@@ -19,4 +19,11 @@ Vagrant.configure(2) do |config|
       node.vm.network :private_network, virtualbox__intnet: "link3", auto_config: false
 
     end
+
+    config.vm.define "devbox" do |node|
+      node.vm.box =  "ubuntu/xenial64"
+
+      # eth1 connected to link2, auto_config is supported for an ubuntu instance
+      node.vm.network :private_network, virtualbox__intnet: "link2", ip: "11.1.1.2"
+    end
 end
