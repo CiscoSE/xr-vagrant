@@ -15,20 +15,11 @@ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 or implied.
 
 """
-# Read all data for model Cisco-IOS-XR-shellutil-oper and print system
-# uptime.
-#
-
-# import providers, services and models
 from ydk.services import CRUDService
 from ydk.providers import NetconfServiceProvider
-from ydk.models.cisco_ios_xr import Cisco_IOS_XR_shellutil_oper \
-    as xr_shellutil_oper
-from datetime import timedelta
+from ydk.models.cisco_ios_xr.Cisco_IOS_XR_ifmgr_cfg import InterfaceConfigurations
 
 if __name__ == "__main__":
-    """Main execution path"""
-
     # create NETCONF session
     provider = NetconfServiceProvider(address="localhost",
                                       port=57779,
@@ -36,18 +27,22 @@ if __name__ == "__main__":
                                       password="vagrant",
                                       protocol="ssh")
 
+
     # create CRUD service
     crud = CRUDService()
 
-    # create system time object
-    system_time = xr_shellutil_oper.SystemTime()
+    # create interface config object
+    interfacesDef = InterfaceConfigurations()
 
     # read system time from device
-    system_time = crud.read(provider, system_time)
+    interfaces = crud.read(provider, interfacesDef)
 
-    # print system uptime
-    print("System uptime is " +
-          str(timedelta(seconds=int(system_time.uptime.uptime))))
+    for interfaceConfig in interfaces.interface_configuration:
+        if interfaceConfig.interface_name == "GigabitEthernet0/0/0/0":
+            interfaceConfig.description = "Changed from YDK"
+            break
+
+    if crud.update(provider, interfaces):
+        print "Changed!"
 
     exit()
-# End of script

@@ -4,6 +4,18 @@
 
 Vagrant.configure(2) do |config|
 
+
+    config.vm.define "devbox" do |node|
+      node.vm.provider "virtualbox" do |pmv|
+        pmv.memory = 4096
+      end
+      node.vm.box =  "ubuntu/xenial64"
+      node.vm.provision "shell", path: "ydk.sh"
+
+      # eth1 connected to link2, auto_config is supported for an ubuntu instance
+      node.vm.network :private_network, virtualbox__intnet: "link2", ip: "11.1.1.2"
+    end
+
     config.vm.define "rtr1" do |node|
       node.vm.box =  "IOS-XRv"
 
@@ -18,12 +30,5 @@ Vagrant.configure(2) do |config|
       node.vm.network :private_network, virtualbox__intnet: "link2", auto_config: false
       node.vm.network :private_network, virtualbox__intnet: "link3", auto_config: false
 
-    end
-
-    config.vm.define "devbox" do |node|
-      node.vm.box =  "ubuntu/xenial64"
-
-      # eth1 connected to link2, auto_config is supported for an ubuntu instance
-      node.vm.network :private_network, virtualbox__intnet: "link2", ip: "11.1.1.2"
     end
 end

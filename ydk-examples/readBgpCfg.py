@@ -15,20 +15,11 @@ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 or implied.
 
 """
-# Read all data for model Cisco-IOS-XR-shellutil-oper and print system
-# uptime.
-#
-
-# import providers, services and models
 from ydk.services import CRUDService
 from ydk.providers import NetconfServiceProvider
-from ydk.models.cisco_ios_xr import Cisco_IOS_XR_shellutil_oper \
-    as xr_shellutil_oper
-from datetime import timedelta
+from ydk.models.cisco_ios_xr.Cisco_IOS_XR_ipv4_bgp_cfg import Bgp
 
 if __name__ == "__main__":
-    """Main execution path"""
-
     # create NETCONF session
     provider = NetconfServiceProvider(address="localhost",
                                       port=57779,
@@ -39,15 +30,15 @@ if __name__ == "__main__":
     # create CRUD service
     crud = CRUDService()
 
-    # create system time object
-    system_time = xr_shellutil_oper.SystemTime()
+    bgp = Bgp()
 
-    # read system time from device
-    system_time = crud.read(provider, system_time)
+    bgp = crud.read(provider, bgp)
 
-    # print system uptime
-    print("System uptime is " +
-          str(timedelta(seconds=int(system_time.uptime.uptime))))
+    for instance in bgp.instance["default"].instance_as:
+        for fourByteAs in instance.four_byte_as:
+            print("AS " + str(fourByteAs.as_))
+            for neighbor in fourByteAs.default_vrf.bgp_entity.neighbors.neighbor:
+                print "\t Neighbor " + neighbor.neighbor_address
+                print "\t\t" + neighbor.neighbor_group_add_member
 
     exit()
-# End of script

@@ -17,7 +17,7 @@ or implied.
 """
 from ydk.services import CRUDService
 from ydk.providers import NetconfServiceProvider
-from ydk.models.cisco_ios_xr.Cisco_IOS_XR_ifmgr_cfg import InterfaceConfigurations
+from ydk.models.cisco_ios_xr.Cisco_IOS_XR_ipv4_ospf_cfg import Ospf
 
 if __name__ == "__main__":
     # create NETCONF session
@@ -27,24 +27,18 @@ if __name__ == "__main__":
                                       password="vagrant",
                                       protocol="ssh")
 
-
     # create CRUD service
     crud = CRUDService()
 
-    # create interface config object
-    interfacesDef = InterfaceConfigurations()
+    ospf = Ospf()
 
-    # read system time from device
-    interfaces = crud.read(provider, interfacesDef)
+    ospf = crud.read(provider, ospf)
 
-    for interfaceConfig in interfaces.interface_configuration:
-        if interfaceConfig.interface_name == "GigabitEthernet0/0/0/0":
-            interfaceConfig.description = "Changed from YDK"
-            break
-
-    if crud.update(provider, interfaces):
-        print "Changed!"
-
-
+    for ospfProcess in ospf.processes.process:
+        print "Process: " + ospfProcess.process_name
+        for area in ospfProcess.default_vrf.area_addresses.area_area_id:
+            print "Area: " + str(area.area_id)
+            for interface in area.name_scopes.name_scope.keys():
+                print "Interface: " + interface
 
     exit()

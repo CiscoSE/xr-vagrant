@@ -42,7 +42,7 @@ In this example (when you bring your XRv up the port can be different)
 port 22 of the router is mapped to port 2223 in your machine. 
 To ssh to the router, use the port mapped to 22 (guest) with vagrant/vagrant credentials
 
-For this example, you can ssh to the XRv using
+You can ssh to the XRv using
 
 ```bash
 ssh vagrant@localhost -p 2223
@@ -51,16 +51,30 @@ ssh vagrant@localhost -p 2223
 830 is the XRv netconf port; it is mapped to 57779 in your machine. Use port 57779 to redirect netconf calls 
 to the router
 
+
+The router.cfg file has a basic configuration for the XRv. Apply this configuration 
+if you want to access the router from the linux VM. 
+
+
 To login into the Linux VM use this command:
 
 ```bash
 vagrant ssh devbox
 ```
+This is an Ubuntu VM with YDK-py installed and ready to use!
+Access to the router from the Linux VM via 11.1.1.3 (after you apply the router configuration in the previous step) 
 
-The router.cfg file has a basic configuration for the XRv. Apply this configuration 
-if you want to access the router from the linux VM. 
+Once you have connectivity to the router from this VM, you will be able to execute the examples.
+ Remember to change the credentials and port, since from the VM the netconf port will be 830 and IP 11.1.1.3
+ 
+```python
+provider = NetconfServiceProvider(address="11.1.1.3",
+                                  port=830,
+                                  username="vagrant",
+                                  password="vagrant",
+                                  protocol="ssh")
+```
 
-You can access to the router from the Linux VM via 11.1.1.3 (after you apply the configuration) 
 
 3) If you need to remove the VMs 
 
@@ -82,6 +96,7 @@ vagrant up rtr1
 ## Examples and tutorials
 There are a couple of python examples under ydk-examples directory. In order to run them, be sure the 
 install the yang development kit: https://github.com/CiscoDevNet/ydk-py
+More examples can be found at https://github.com/CiscoDevNet/ydk-py-samples/tree/master/samples/basic/crud/models/cisco-ios-xr
 
-More tutorials at https://xrdocs.io/
+Tutorials at https://xrdocs.io/
 
