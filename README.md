@@ -4,14 +4,14 @@ and an Ubuntu virtual machine in order to use them as a development environment 
  
 ## IOS XRv image
 
-To run XRv in your laptop you will need to download the image first.
+Download the vagrant image
 
 https://xrdocs.io/application-hosting/tutorials/iosxr-vagrant-quickstart
 
 
 ## Create an XRv and a linux instance 
 
-1) Clone this repository
+1) Clone the repository
 
 ```bash
 git clone https://github.com/CiscoSE/xr-vagrant.git
@@ -23,8 +23,8 @@ git clone https://github.com/CiscoSE/xr-vagrant.git
 vagrant up
 ```
 
-You will see logs messages, including the ports that you will need to use to 
-connect via ssh and netconf to XRv:
+You will see log messages with the ports that you will need to use to 
+connect via ssh and netconf to the XRv:
 
 
 ```bash
@@ -38,18 +38,18 @@ Bringing machine 'rtr1' up with 'virtualbox' provider...
 (..)
 ```
 
-In this example (when you bring your XRv up the port can be different)
-port 22 of the router is mapped to port 2223 in your machine. 
-To ssh to the router, use the port mapped to 22 (guest) with vagrant/vagrant credentials
+In this example (keep in mind that when you bring the XRv up the port might be different),
+port 22 of the router is mapped to port 2223 in your laptop. 
+To login, use the port mapped to 22 (guest) with vagrant/vagrant credentials
 
-You can ssh to the XRv using
+ssh to the XRv using this command: (For Windows, use putty or another ssh client)
 
 ```bash
 ssh vagrant@localhost -p 2223
 ```
 
-830 is the XRv netconf port; it is mapped to 57779 in your machine. Use port 57779 to redirect netconf calls 
-to the router
+XRv uses port 830 for netconf; it is mapped to 57779 in your laptop. If you want to run netconf calls to the XRv from
+your laptop, 57779 is the port to use
 
 
 The router.cfg file has a basic configuration for the XRv. Apply this configuration 
@@ -61,11 +61,13 @@ To login into the Linux VM use this command:
 ```bash
 vagrant ssh devbox
 ```
-This is an Ubuntu VM with YDK-py installed and ready to use!
-Access to the router from the Linux VM via 11.1.1.3 (after you apply the router configuration in the previous step) 
 
-Once you have connectivity to the router from this VM, you will be able to execute the examples.
- Remember to change the credentials and port, since from the VM the netconf port will be 830 and IP 11.1.1.3
+YDK-py will be already installed and ready to use.
+Access to the router from the Linux VM via 11.1.1.3 (remember to apply the router configuration in the previous step) 
+
+Once you have connectivity to the XRv from this VM, you will be able to run the examples under ydk-examples directory.
+ If you are running the examples from the VM, change the credentials and port in the code, since from the VM
+  the netconf port will be 830 and IP 11.1.1.3
  
 ```python
 provider = NetconfServiceProvider(address="11.1.1.3",
@@ -85,18 +87,16 @@ vagrant destroy
 
 
 ## Known issues
-If you configure netconf in the router, you will need to restart the router using the
- following commands
+After configuring netconf in XRv, the ssh connection to port 830 will not work properly. Restart the router to fix the issue
 
 ```bash
 vagrant halt -f rtr1
 vagrant up rtr1
 ```
 
-## Examples and tutorials
-There are a couple of python examples under ydk-examples directory. In order to run them, be sure the 
-install the yang development kit: https://github.com/CiscoDevNet/ydk-py
-More examples can be found at https://github.com/CiscoDevNet/ydk-py-samples/tree/master/samples/basic/crud/models/cisco-ios-xr
+## Useful links
 
-Tutorials at https://xrdocs.io/
+* YDK-Py: https://github.com/CiscoDevNet/ydk-py
+* YDK-Py examples: https://github.com/CiscoDevNet/ydk-py-samples/tree/master/samples/basic/crud/models/cisco-ios-xr
+* Tutorials and guides: https://xrdocs.io/
 
