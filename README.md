@@ -72,6 +72,14 @@ Login into the VM:
 vagrant ssh devbox
 ```
 
+Make sure that you have the latest version of the code
+
+```bash
+cd /home/vagrant/xr-vagrant
+sudo git pull
+```
+
+
 Go to the directory where the examples are located
 
 ```bash
