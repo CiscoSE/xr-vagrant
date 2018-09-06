@@ -30,8 +30,8 @@ if __name__ == "__main__":
     """Main execution path"""
 
     # create NETCONF session
-    provider = NetconfServiceProvider(address="localhost",
-                                      port=57779,
+    provider = NetconfServiceProvider(address="11.1.1.3",
+                                      port=830,
                                       username="vagrant",
                                       password="vagrant",
                                       protocol="ssh")

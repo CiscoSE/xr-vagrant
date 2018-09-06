@@ -29,7 +29,7 @@ def config_ospf(ospf):
     # OSPF process
     process = ospf.processes.Process()
     process.process_name = "DEFAULT"
-    process.default_vrf.router_id = "172.16.255.1"
+    process.default_vrf.router_id = "1.1.1.1"
     process.start = Empty()
 
     # Area 0
@@ -66,8 +66,8 @@ if __name__ == "__main__":
     """Execute main program."""
 
     # create NETCONF provider
-    provider = NetconfServiceProvider(address="localhost",
-                                      port=57779,
+    provider = NetconfServiceProvider(address="11.1.1.3",
+                                      port=830,
                                       username="vagrant",
                                       password="vagrant",
                                       protocol="ssh")

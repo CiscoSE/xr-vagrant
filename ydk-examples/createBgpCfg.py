@@ -36,6 +36,7 @@ def config_bgp(bgp):
     four_byte_as = instance_as.FourByteAs()
     four_byte_as.as_ = 65001
     four_byte_as.bgp_running = Empty()
+
     # global address family
     global_af = four_byte_as.default_vrf.global_.global_afs.GlobalAf()
     global_af.af_name = xr_ipv4_bgp_datatypes.BgpAddressFamily.ipv4_unicast
@@ -50,6 +51,7 @@ def config_bgp(bgp):
     neighbor_group = neighbor_groups.NeighborGroup()
     neighbor_group.neighbor_group_name = "IBGP"
     neighbor_group.create = Empty()
+
     # remote AS
     neighbor_group.remote_as.as_xx = 0
     neighbor_group.remote_as.as_yy = 65001
@@ -73,8 +75,8 @@ if __name__ == "__main__":
     """Execute main program."""
 
     # create NETCONF provider
-    provider = NetconfServiceProvider(address="localhost",
-                                      port=57779,
+    provider = NetconfServiceProvider(address="11.1.1.3",
+                                      port=830,
                                       username="vagrant",
                                       password="vagrant",
                                       protocol="ssh")
