@@ -216,6 +216,7 @@ System uptime is 15:26:47
 ## Bonus: Installing the Advanced Netconf Explorer
 
 ANX (Advanced Netconf Explorer) is a graphical explorer for NETCONF / YANG and GNMI/GRPC Telemetry & Java NETCONF 1.1 client library
+
 You can find more information at https://github.com/cisco-ie/anx
 
 In this section, we are going to install the explorer on top of the ubuntu VM.
@@ -229,7 +230,7 @@ sudo docker build -t netconf-explorer .
 sudo docker run --name netconf-exlorer -d -p 9269:8080 netconf-explorer
 ```
 
-In order to access to the web user interface, you will need to: 
+In order to access to the web user interface, you will need to map the port that anx is using in the VM to the laptop: 
 
 1) Open virtual box  
 2) Select the devbox VM
@@ -254,4 +255,4 @@ Go to http://127.0.0.1:8080/ and connect to the router using IP 11.1.1.3 and vag
 * YDK-Py examples: https://github.com/CiscoDevNet/ydk-py-samples/tree/master/samples/basic/crud/models/cisco-ios-xr
 * Tutorials and guides: https://xrdocs.io/
 * ANX: https://github.com/cisco-ie/anx
-
+* Telemetry tutorial: https://xrdocs.io/programmability/tutorials/2017-08-14-validate-the-intent-of-network-config-changes/
